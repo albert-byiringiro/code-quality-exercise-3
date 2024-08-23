@@ -1,14 +1,15 @@
 const flattenArray = (array) => {
-    const newArr = []
-    for (let element of array) {
-        if (Array.isArray(element)) {
-            const innerArr = flattenArray(element);
-            for (let innerEl of innerArr) {
-                newArr.push(innerEl)
-            }
-        } else {
-            newArr.push(element)
-        }
+  let maxDepth = 1;
+  
+  const countDepth = (arr, currentDepth) => {
+    for (const element of arr) {
+      if (Array.isArray(element)) {
+        maxDepth = Math.max(maxDepth, currentDepth + 1);
+        countDepth(element, currentDepth + 1);
+      }
     }
-    return newArr;
-}
+  };
+
+  countDepth(array, 1);
+  return array.flat(maxDepth - 1);
+};
